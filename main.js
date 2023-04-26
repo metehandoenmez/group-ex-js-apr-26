@@ -20,3 +20,56 @@ function getMin(arr) {
   let sorted = arr.sort((a, b) => a - b)
   return sorted[0]
 }
+
+class Process {
+  static toJSON(obj) {
+    let jsonString = JSON.stringify(obj)
+    return jsonString;
+  }
+
+  static fromJSON(jsonString) {
+    let obj = JSON.parse(jsonString);
+    return obj;
+  }
+}
+
+function callbackFc1(arg) {
+  let parsed = Process.fromJSON(arg);
+  console.log(parsed);
+}
+
+function double (nm) {
+return nm * 2;
+}
+
+function callbackFc2(arg) {
+  let parsed = Process.fromJSON(arg);
+  let doubled = parsed.map(double);
+  console.log(doubled);
+}
+/* callbackFc2(JSON.stringify(dataArr)); */
+
+function callbackFc3(arg) {
+  let parsed = Process.fromJSON(arg);
+  let doubled = parsed.filter((nm) => nm%2===0).sort((a,b) => a-b);
+  console.log(doubled);
+}
+/* callbackFc3(JSON.stringify(dataArr)); */
+
+function func1(arg, callback1) {
+  let str = Process.toJSON(arg);
+  callback1(str);
+}
+func1(dataArr, callbackFc1);
+func1(dataArr, callbackFc2);
+func1(dataArr, callbackFc3);
+
+function func2(arg, callback1) {
+  let str = Process.toJSON(arg);
+  setTimeout(() => {
+  callback1(str);
+  }, 2000);
+}
+func2(dataArr, callbackFc1);
+func2(dataArr, callbackFc2);
+func2(dataArr, callbackFc3);

@@ -23,45 +23,66 @@ function getMin(arr) {
 
 class Process {
   static toJSON(obj) {
-    return JSON.stringify(obj);
+    let jsonString = JSON.stringify(obj)
+    return jsonString;
   }
+
   static fromJSON(jsonString) {
-    return JSON.parse(jsonString);
+    let obj = JSON.parse(jsonString);
+    return obj;
   }
 }
 
-function callbackNr1(jsonString) {
-  let parsedObj = Process.fromJSON(jsonString)
-  console.log(parsedObj);
+function callbackFc1(arg1) {
+  let parsed = Process.fromJSON(arg1);
+  console.log(parsed);
 }
 
-function callbackNr2(jsonString) {
-  let parsedObj = Process.fromJSON(jsonString);
-  let doubled = [];
-  doubled = parsedObj.map((elem) => elem * 2);
+function doubleTheElement(elem) {
+  return elem * 2;
+}
+
+function callbackFc2(arg1) {
+  let parsed = Process.fromJSON(arg1);
+  let doubled = parsed.map(doubleTheElement);
   console.log(doubled);
 }
 
-function callbackNr3(jsonString) {
-  let parsedObj = Process.fromJSON(jsonString);
-  let result = parsedObj.filter((elem) => elem % 2 === 0);
+function callbackFc3(arg) {
+  let parsed = Process.fromJSON(arg);
+  let result = parsed.filter((elem) => elem % 2 === 0);
   console.log(result);
 }
 
+function callbackFc4(arg) {
+  console.log(arg);
+  console.log(typeof arg);
+}
+
 function func1(data, callback1) {
-  let jsonString = Process.toJSON(data);
-  callback1(jsonString);
+  let str = Process.toJSON(data);
+  callback1(str);
 }
 
 function func2(data, cb) {
-  let jsonString = Process.toJSON(data);
+  let str = Process.toJSON(data);
   setTimeout(() => {
-    cb(jsonString)
+    cb(str)
   }, 2000);
 }
 
-func1(dataArr, callbackNr1);
-func1(dataArr, callbackNr2);
-func1(dataArr, callbackNr3);
+// let button = document.getElementById("button");
+// button.addEventListener("click", callbackFc2)
 
-func2(dataArr, callbackNr1);
+func1(dataArr, callbackFc1);
+func1(dataArr, callbackFc2);
+func1(dataArr, callbackFc3);
+
+func2(dataArr, callbackFc4)
+
+
+// function doSomething(arg = "not hello") {
+//   console.log(arg);
+// }
+
+// doSomething()
